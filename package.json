@@ -4,7 +4,7 @@
   "scripts": {
     "build": "bunx @tailwindcss/cli -i src/input.css -o css/main.css --minify",
     "watch": "bunx @tailwindcss/cli -i src/input.css -o css/main.css --watch",
-    "serve": "bunx serve -l 4173"
+    "serve": "bun server.js"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4",

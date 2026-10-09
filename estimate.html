@@ -49,12 +49,29 @@
         </div>
       </div>
 
-      <!-- ============ STEP 1: ADDRESS ============ -->
+      <!-- ============ STEP 1: CONTACT + ADDRESS ============ -->
       <div class="wizard-step" data-step="1">
-        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">What's the property address?</h1>
-        <p class="mt-3 text-stone-300">We'll pull up the satellite view and parcel boundaries so you can show us exactly what you want cleared.</p>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Get your instant estimate</h1>
+        <p class="mt-3 text-stone-300">Tell us where to reach you, then show us the property on the satellite map.</p>
         <div class="mt-8 bg-forest-900 rounded-lg border border-forest-800 p-6 md:p-8">
-          <label for="address-input" class="block text-sm font-semibold text-stone-200">Property address</label>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="contact-name" class="block text-sm font-semibold text-stone-200">Name</label>
+              <input type="text" id="contact-name" autocomplete="name"
+                class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+            </div>
+            <div>
+              <label for="contact-phone" class="block text-sm font-semibold text-stone-200">Phone</label>
+              <input type="tel" id="contact-phone" autocomplete="tel"
+                class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+            </div>
+            <div class="sm:col-span-2">
+              <label for="contact-email" class="block text-sm font-semibold text-stone-200">Email</label>
+              <input type="email" id="contact-email" autocomplete="email"
+                class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+            </div>
+          </div>
+          <label for="address-input" class="block text-sm font-semibold text-stone-200 mt-5">Property address</label>
           <input type="text" id="address-input" placeholder="123 Main St, Cle Elum, WA 98922"
             class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-3 text-white focus:border-ember-500 focus:ring-ember-500" />
           <p id="address-error" class="hidden mt-2 text-sm text-red-400"></p>
@@ -69,12 +86,16 @@
 
       <!-- ============ STEP 2: CONFIRM LOCATION ============ -->
       <div class="wizard-step hidden" data-step="2">
-        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Is this your place?</h1>
-        <p class="mt-3 text-stone-300">We dropped a pin from your address. If it's off, drag the map and tap the exact spot — rural addresses are often approximate.</p>
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Which one is yours?</h1>
+        <p class="mt-3 text-stone-300">County parcel outlines are drawn in blue — tap yours. No outlines? Zoom in closer, or tap the map to pin your exact spot.</p>
         <div class="mt-6 rounded-lg overflow-hidden border border-forest-700">
           <div id="map-parcel" class="h-[420px] w-full bg-forest-900"></div>
         </div>
         <p id="parcel-status" class="mt-3 text-sm text-stone-400">Tap the map to move the pin if the address landed in the wrong spot.</p>
+        <div id="parcel-list-box" class="hidden mt-4">
+          <p class="text-sm font-semibold uppercase tracking-widest text-stone-400">Nearby parcels — tap yours</p>
+          <ul id="parcel-list" class="mt-2 space-y-1.5"></ul>
+        </div>
         <div class="mt-5 bg-forest-900 rounded-lg border border-forest-800 p-5">
           <p class="text-sm uppercase tracking-widest text-stone-400 font-semibold">Confirm your property</p>
           <p id="confirm-address" class="mt-1 font-semibold text-white text-lg"></p>
@@ -181,20 +202,12 @@
           <p class="mt-2 text-sm text-stone-300">Send us your estimate — with your map area included — and we'll schedule a free on-site visit to confirm.</p>
           <input type="hidden" id="field-estimate" name="estimate" />
           <input type="hidden" id="field-geometry" name="drawn_area_geojson" />
+          <input type="hidden" id="field-name" name="name" />
+          <input type="hidden" id="field-phone" name="phone" />
+          <input type="hidden" id="field-email" name="email" />
           <input type="hidden" name="subject" value="New estimate request — uppervalleylandclearing.com" />
+          <p id="contact-summary" class="mt-4 text-sm text-stone-400"></p>
           <div class="mt-5 grid sm:grid-cols-2 gap-4">
-            <div>
-              <label for="name" class="block text-sm font-semibold text-stone-200">Name</label>
-              <input type="text" id="name" name="name" required class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
-            </div>
-            <div>
-              <label for="phone" class="block text-sm font-semibold text-stone-200">Phone</label>
-              <input type="tel" id="phone" name="phone" required class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
-            </div>
-            <div class="sm:col-span-2">
-              <label for="email" class="block text-sm font-semibold text-stone-200">Email</label>
-              <input type="email" id="email" name="email" required class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
-            </div>
             <div class="sm:col-span-2">
               <label for="notes" class="block text-sm font-semibold text-stone-200">Anything else we should know? <span class="font-normal text-stone-400">(optional)</span></label>
               <textarea id="notes" name="notes" rows="3" class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500"></textarea>
