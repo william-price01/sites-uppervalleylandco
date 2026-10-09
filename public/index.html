@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upper Valley Land Clearing — Website Coming Soon</title>
+  <meta name="description" content="Forestry mulching, land clearing, and wildfire defensible space in the Upper Valley. No burning, no hauling. Free on-site estimates." />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Upper Valley Land Clearing",
+    "url": "https://www.uppervalleylandclearing.com/",
+    "telephone": "+1-509-260-9126",
+    "description": "Land clearing, forestry mastication, and wildfire defensible space in the Upper Valley.",
+    "priceRange": "$$",
+    "areaServed": "Upper Valley"
+  }
+  </script>
+</head>
+<body class="bg-forest-950 text-stone-200 antialiased">
+
+  <main class="relative min-h-screen flex items-center bg-forest-950">
+    <img src="images/hero.svg" alt="Forestry mulcher clearing overgrown land" class="absolute inset-0 w-full h-full object-cover opacity-40" />
+    <div class="relative mx-auto max-w-xl px-4 py-16">
+      <p class="font-display text-white text-lg font-semibold tracking-wide uppercase">
+        Upper Valley <span class="text-ember-400">Land Clearing</span>
+      </p>
+      <h1 class="mt-6 font-display text-4xl md:text-5xl font-bold text-white uppercase leading-tight">
+        Our Website Is Coming Soon
+      </h1>
+      <p class="mt-4 text-lg text-stone-200">
+        Forestry mulching, land clearing, and wildfire defensible space in the Upper Valley. No burning, no hauling.
+      </p>
+      <p class="mt-6 text-stone-200">
+        Reach us at
+        <a href="tel:+15092609126" class="text-ember-400 font-semibold hover:text-ember-300">(509) 260-9126</a>
+        or
+        <a href="mailto:info@uppervalleylandclearing.com" class="text-ember-400 font-semibold hover:text-ember-300">info@uppervalleylandclearing.com</a>
+      </p>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="mt-8 bg-forest-900 rounded-lg border border-forest-800 p-6 md:p-8">
+        <h2 class="font-display text-2xl font-semibold uppercase text-white">Send Us a Message</h2>
+        <input type="hidden" name="access_key" value="8ed4241b-45ef-4fdb-8c8c-c02a16ff8217" />
+        <input type="hidden" name="subject" value="New contact — uppervalleylandclearing.com coming-soon page" />
+        <input type="hidden" name="from_name" value="UVLC Website" />
+        <input type="checkbox" name="botcheck" style="display:none" />
+        <div class="mt-5 grid sm:grid-cols-2 gap-4">
+          <div>
+            <label for="name" class="block text-sm font-semibold text-stone-200">Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name"
+              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-semibold text-stone-200">Phone <span class="font-normal text-stone-400">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel"
+              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="email" class="block text-sm font-semibold text-stone-200">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email"
+              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="message" class="block text-sm font-semibold text-stone-200">Message</label>
+            <textarea id="message" name="message" rows="4" required
+              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="mt-6 w-full sm:w-auto bg-ember-500 hover:bg-ember-600 text-white font-semibold px-8 py-3 rounded-md transition disabled:opacity-60">
+          Send Message
+        </button>
+        <p data-status class="mt-3 text-sm"></p>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const form = document.querySelector("form");
+    const status = form.querySelector("[data-status]");
+    const btn = form.querySelector("button[type=submit]");
+    const setStatus = (msg, ok) => {
+      status.textContent = msg;
+      status.className = ok
+        ? "mt-3 text-sm font-medium text-forest-600"
+        : "mt-3 text-sm font-medium text-red-600";
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (form.elements.access_key.value === "YOUR_WEB3FORMS_ACCESS_KEY") {
+        setStatus("Form not connected yet — call us instead: (509) 260-9126", false);
+        return;
+      }
+
+      btn.disabled = true;
+      const label = btn.textContent;
+      btn.textContent = "Sending…";
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: new FormData(form),
+        });
+        const json = await res.json();
+        if (json.success) {
+          form.reset();
+          setStatus("Thanks — we'll be in touch within one business day.", true);
+        } else {
+          setStatus("Something went wrong. Please call us instead: (509) 260-9126", false);
+        }
+      } catch {
+        setStatus("Something went wrong. Please call us instead: (509) 260-9126", false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = label;
+      }
+    });
+  </script>
+</body>
+</html>
