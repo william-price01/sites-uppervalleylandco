@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instant Estimate | Upper Valley Land Clearing</title>
+  <meta name="description" content="Get a ballpark price for land clearing, forestry mastication, or fire mitigation in about a minute. Find your property on the map, draw your clearing area, get a price." />
+  <link rel="stylesheet" href="css/vendor/leaflet.css" />
+  <link rel="stylesheet" href="css/vendor/leaflet-draw.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-forest-950 text-stone-200 antialiased">
+
+  <header class="sticky top-0 z-50 bg-forest-950/95 backdrop-blur border-b border-forest-800">
+    <div class="mx-auto max-w-6xl px-4 flex items-center justify-between h-16">
+      <a href="index.html" class="font-display text-white text-lg font-semibold tracking-wide uppercase">
+        Upper Valley <span class="text-ember-400">Land Clearing</span>
+      </a>
+      <nav id="nav-menu" class="hidden md:flex absolute md:static top-16 left-0 right-0 bg-forest-950 md:bg-transparent flex-col md:flex-row gap-1 md:gap-6 p-4 md:p-0 border-b border-forest-800 md:border-0">
+        <a href="index.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Home</a>
+        <a href="gallery.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Gallery</a>
+        <a href="estimate.html" class="text-white px-2 py-2 text-sm font-semibold">Instant Estimate</a>
+        <a href="contract.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Our Contract</a>
+        <a href="tel:+15555550123" class="md:hidden text-ember-400 font-semibold px-2 py-2 text-sm">(555) 555-0123</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="tel:+15555550123" class="hidden md:inline-block text-white text-sm font-semibold hover:text-ember-300">(555) 555-0123</a>
+        <button id="nav-toggle" class="md:hidden text-white p-2" aria-label="Menu" aria-expanded="false">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-12 md:py-16">
+    <div class="mx-auto max-w-3xl px-4">
+
+      <!-- Progress -->
+      <div class="mb-8">
+        <div class="flex justify-between items-baseline text-sm font-semibold uppercase tracking-widest">
+          <span class="text-ember-400" id="step-label">Step 1 of 5</span>
+          <span class="text-stone-400" id="step-pct">20%</span>
+        </div>
+        <div class="mt-2 h-1.5 bg-forest-800 rounded-full overflow-hidden">
+          <div id="step-bar" class="h-full bg-ember-500 rounded-full transition-all duration-300" style="width: 20%"></div>
+        </div>
+      </div>
+
+      <!-- ============ STEP 1: ADDRESS ============ -->
+      <div class="wizard-step" data-step="1">
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">What's the property address?</h1>
+        <p class="mt-3 text-stone-300">We'll pull up the satellite view and parcel boundaries so you can show us exactly what you want cleared.</p>
+        <div class="mt-8 bg-forest-900 rounded-lg border border-forest-800 p-6 md:p-8">
+          <label for="address-input" class="block text-sm font-semibold text-stone-200">Property address</label>
+          <input type="text" id="address-input" placeholder="123 Main St, Cle Elum, WA 98922"
+            class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-3 text-white focus:border-ember-500 focus:ring-ember-500" />
+          <p id="address-error" class="hidden mt-2 text-sm text-red-400"></p>
+          <button id="find-property" class="mt-5 w-full bg-ember-500 hover:bg-ember-600 text-white font-semibold px-8 py-3 rounded-md transition">
+            Find My Property
+          </button>
+          <button id="skip-address" class="mt-3 w-full text-sm text-stone-400 hover:text-stone-200 underline underline-offset-2">
+            My address isn't found — I'll pin it on the map instead
+          </button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 2: CONFIRM LOCATION ============ -->
+      <div class="wizard-step hidden" data-step="2">
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Is this your place?</h1>
+        <p class="mt-3 text-stone-300">We dropped a pin from your address. If it's off, drag the map and tap the exact spot — rural addresses are often approximate.</p>
+        <div class="mt-6 rounded-lg overflow-hidden border border-forest-700">
+          <div id="map-parcel" class="h-[420px] w-full bg-forest-900"></div>
+        </div>
+        <p id="parcel-status" class="mt-3 text-sm text-stone-400">Tap the map to move the pin if the address landed in the wrong spot.</p>
+        <div class="mt-5 bg-forest-900 rounded-lg border border-forest-800 p-5">
+          <p class="text-sm uppercase tracking-widest text-stone-400 font-semibold">Confirm your property</p>
+          <p id="confirm-address" class="mt-1 font-semibold text-white text-lg"></p>
+          <p id="confirm-parcel" class="mt-1 text-sm text-stone-300"></p>
+        </div>
+        <div class="mt-5 flex gap-3">
+          <button class="btn-back flex-1 bg-forest-800 hover:bg-forest-700 text-white font-semibold px-6 py-3 rounded-md transition">← Back</button>
+          <button id="confirm-parcel-btn" disabled class="flex-1 bg-ember-500 hover:bg-ember-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-md transition">
+            That's My Property →
+          </button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 3: DRAW AREA ============ -->
+      <div class="wizard-step hidden" data-step="3">
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Draw your clearing area</h1>
+        <p class="mt-3 text-stone-300">Draw around the part you want cleared — <em>not</em> the whole parcel. Multiple areas are fine; we add them up.</p>
+        <div class="relative mt-6 rounded-lg overflow-hidden border border-forest-700">
+          <div id="map-draw" class="h-[440px] w-full bg-forest-900"></div>
+          <div class="absolute bottom-4 left-4 z-[500] bg-forest-950/90 border border-forest-700 rounded-lg px-4 py-3">
+            <p class="text-xs uppercase tracking-widest text-stone-400 font-semibold">Clearing area</p>
+            <p class="font-display text-2xl font-bold text-ember-400"><span id="acres-display">0.00</span> <span class="text-sm text-stone-300 font-normal">ac</span></p>
+          </div>
+        </div>
+        <p class="mt-3 text-sm text-stone-400">Use the polygon tool (⬠) on the map's left toolbar. Click corner points, click the first point again to close. The toolbar's edit and delete buttons fix mistakes.</p>
+        <div class="mt-5 flex gap-3">
+          <button class="btn-back flex-1 bg-forest-800 hover:bg-forest-700 text-white font-semibold px-6 py-3 rounded-md transition">← Back</button>
+          <button id="confirm-area-btn" disabled class="flex-1 bg-ember-500 hover:bg-ember-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-md transition">
+            Continue →
+          </button>
+        </div>
+        <button id="manual-acreage" class="mt-3 w-full text-sm text-stone-400 hover:text-stone-200 underline underline-offset-2">
+          Not sure? Pick your acreage from a slider instead →
+        </button>
+        <div id="manual-acreage-box" class="hidden mt-4 bg-forest-900 rounded-lg border border-forest-800 p-5">
+          <label for="acres-manual" class="block text-sm font-semibold text-stone-200">Approximate area: <span id="acres-manual-out" class="text-ember-400 font-bold">2 acres</span></label>
+          <input type="range" id="acres-manual" min="0.25" max="20" step="0.25" value="2" class="mt-3 w-full accent-ember-500" />
+        </div>
+      </div>
+
+      <!-- ============ STEP 4: PROJECT DETAILS ============ -->
+      <div class="wizard-step hidden" data-step="4">
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Project details</h1>
+        <p class="mt-3 text-stone-300">Last few questions — this sets your price range.</p>
+        <form id="calc-form" class="mt-6 bg-forest-900 rounded-lg border border-forest-800 p-6 md:p-8 space-y-6">
+          <div>
+            <label for="service" class="block text-sm font-semibold text-stone-200">What do you need done?</label>
+            <select id="service" name="service" class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500">
+              <option value="mulching">Forestry Mastication / Mulching</option>
+              <option value="fire">Fire Mitigation / Defensible Space</option>
+              <option value="clearing">Full Land Clearing</option>
+              <option value="brush">Brush &amp; Blackberry Clearing</option>
+            </select>
+          </div>
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div>
+              <label for="density" class="block text-sm font-semibold text-stone-200">Vegetation density</label>
+              <select id="density" name="density" class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500">
+                <option value="light">Light — grass, scattered brush</option>
+                <option value="moderate" selected>Moderate — thick brush, saplings</option>
+                <option value="heavy">Heavy — dense brush, small trees</option>
+              </select>
+            </div>
+            <div>
+              <label for="terrain" class="block text-sm font-semibold text-stone-200">Terrain</label>
+              <select id="terrain" name="terrain" class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500">
+                <option value="flat" selected>Flat</option>
+                <option value="rolling">Rolling</option>
+                <option value="steep">Steep</option>
+              </select>
+            </div>
+            <div>
+              <label for="access" class="block text-sm font-semibold text-stone-200">Equipment access</label>
+              <select id="access" name="access" class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500">
+                <option value="easy" selected>Easy — driveway to the work area</option>
+                <option value="moderate">Moderate — some tight spots</option>
+                <option value="difficult">Difficult — gates, narrow paths</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <div class="mt-5 flex gap-3">
+          <button class="btn-back flex-1 bg-forest-800 hover:bg-forest-700 text-white font-semibold px-6 py-3 rounded-md transition">← Back</button>
+          <button id="get-price-btn" class="flex-1 bg-ember-500 hover:bg-ember-600 text-white font-semibold px-6 py-3 rounded-md transition">
+            Get My Ballpark →
+          </button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 5: PRICE + LEAD ============ -->
+      <div class="wizard-step hidden" data-step="5">
+        <h1 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Your ballpark</h1>
+        <div id="calc-result" class="mt-6 bg-forest-800 border border-ember-500/40 rounded-lg p-6 md:p-8 text-white">
+          <p class="text-sm uppercase tracking-widest text-ember-400 font-semibold">Estimated range</p>
+          <p class="mt-2 font-display text-4xl md:text-5xl font-bold">
+            <span id="calc-low">$0</span><span class="text-stone-400 mx-2">–</span><span id="calc-high">$0</span>
+          </p>
+          <p id="calc-summary" class="mt-3 text-sm text-stone-300"></p>
+          <p class="mt-2 text-xs text-stone-400">Ballpark only — final price confirmed with a free on-site visit. No obligation.</p>
+        </div>
+
+        <form data-lead class="mt-8 bg-forest-900 rounded-lg border border-forest-800 p-6 md:p-8">
+          <h2 class="font-display text-2xl font-semibold uppercase text-white">Lock In Your Exact Price</h2>
+          <p class="mt-2 text-sm text-stone-300">Send us your estimate — with your map area included — and we'll schedule a free on-site visit to confirm.</p>
+          <input type="hidden" id="field-estimate" name="estimate" />
+          <input type="hidden" id="field-geometry" name="drawn_area_geojson" />
+          <input type="hidden" name="subject" value="New estimate request — uppervalleylandclearing.com" />
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-semibold text-stone-200">Name</label>
+              <input type="text" id="name" name="name" required class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-semibold text-stone-200">Phone</label>
+              <input type="tel" id="phone" name="phone" required class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+            </div>
+            <div class="sm:col-span-2">
+              <label for="email" class="block text-sm font-semibold text-stone-200">Email</label>
+              <input type="email" id="email" name="email" required class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
+            </div>
+            <div class="sm:col-span-2">
+              <label for="notes" class="block text-sm font-semibold text-stone-200">Anything else we should know? <span class="font-normal text-stone-400">(optional)</span></label>
+              <textarea id="notes" name="notes" rows="3" class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="mt-6 w-full sm:w-auto bg-ember-500 hover:bg-ember-600 text-white font-semibold px-8 py-3 rounded-md transition disabled:opacity-60">
+            Request Free On-Site Visit
+          </button>
+          <p data-status class="mt-3 text-sm"></p>
+        </form>
+
+        <button class="btn-back mt-4 text-sm text-stone-400 hover:text-stone-200 underline underline-offset-2">← Start over</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="bg-forest-950 border-t border-forest-800 text-stone-300 py-10 mt-12">
+    <div class="mx-auto max-w-6xl px-4 text-center text-sm">
+      <p>Questions? Call <a href="tel:+15555550123" class="text-white font-semibold hover:text-ember-300">(555) 555-0123</a></p>
+      <p class="mt-4 text-xs text-stone-500">© <span data-year>2026</span> 57Center LLC dba Upper Valley Land Clearing. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/vendor/leaflet.js"></script>
+  <script src="js/vendor/leaflet-draw.js"></script>
+  <script src="js/vendor/turf.min.js"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/calculator.js" defer></script>
+</body>
+</html>

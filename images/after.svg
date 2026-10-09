@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2f6244"/><stop offset="1" stop-color="#5a9a72"/>
+  </linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <path d="M0 440.00000000000006 L216 304 L408.00000000000006 416 L624 264 L840 400 L1032 320 L1200 440.00000000000006 V800 H0 Z" fill="#1c3627" opacity="0.55"/>
+  <path d="M0 576 L264 480 L540 560 L816.0000000000001 463.99999999999994 L1200 576 V800 H0 Z" fill="#1c3627" opacity="0.8"/>
+  <rect y="680" width="1200" height="120" fill="#1c3627"/>
+  <text x="600" y="400" text-anchor="middle" font-family="sans-serif" font-size="55" font-weight="700" fill="#ffffff" opacity="0.9">AFTER</text>
+  <text x="600" y="486" text-anchor="middle" font-family="sans-serif" font-size="30" fill="#ffffff" opacity="0.7">REPLACE: same spot after mulching</text>
+</svg>
