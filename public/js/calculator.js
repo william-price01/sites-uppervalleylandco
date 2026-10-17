@@ -7,10 +7,12 @@
 
 const RATES = {
   // Base price per acre: moderate density, flat terrain, easy access.
-  mulching: { label: "Forestry Mastication / Mulching", base: 1800 },
-  fire: { label: "Fire Mitigation / Defensible Space", base: 1600 },
-  clearing: { label: "Full Land Clearing", base: 2400 },
-  brush: { label: "Brush & Blackberry Clearing", base: 1200 },
+  // $2,000/acre across services per Markus, 2026-10-17. Density/terrain/
+  // access multipliers below move it; split per-service if he differentiates.
+  mulching: { label: "Forestry Mastication / Mulching", base: 2000 },
+  fire: { label: "Fire Mitigation / Defensible Space", base: 2000 },
+  clearing: { label: "Full Land Clearing", base: 2000 },
+  brush: { label: "Brush & Blackberry Clearing", base: 2000 },
 };
 
 const DENSITY_MULT = { light: 0.7, moderate: 1.0, heavy: 1.45 };
