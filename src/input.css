@@ -62,6 +62,9 @@
 }
 .leaflet-container {
   font-family: var(--font-body);
+  /* Cap Leaflet's internal z-indexes (panes 400, controls 1000) inside a
+     local stacking context so the sticky site header (z-50) stays on top. */
+  z-index: 0;
 }
 /* Leaflet.draw icons: force PNG sprite (the lib's SVG-first override
    renders blank in headless Chromium). Paths are relative to this CSS file. */

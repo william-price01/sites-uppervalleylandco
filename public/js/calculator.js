@@ -27,7 +27,7 @@ function sizeFactor(acres) {
   return 0.8;
 }
 
-const MIN_JOB = 1500; // minimum job charge ($)
+const MIN_JOB = 2000; // minimum job charge ($) — per Markus, 2026-10-17
 const RANGE = 0.2; // output range: estimate ±20%
 const SQ_M_PER_ACRE = 4046.8564224;
 
