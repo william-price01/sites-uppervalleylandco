@@ -1,5 +1,5 @@
 // Upper Valley Land Clearing — shared UI behavior
-// Mobile nav, before/after sliders, lead form submission.
+// Mobile nav, lead form submission.
 
 // ---- Mobile nav ----
 const navToggle = document.getElementById("nav-toggle");
@@ -11,29 +11,9 @@ if (navToggle && navMenu) {
   });
 }
 
-// ---- Before/after sliders ----
-// Any element with [data-ba] becomes draggable. Images must share aspect ratio.
-document.querySelectorAll("[data-ba]").forEach((slider) => {
-  const setPos = (clientX) => {
-    const rect = slider.getBoundingClientRect();
-    const pct = ((clientX - rect.left) / rect.width) * 100;
-    slider.style.setProperty("--pos", `${Math.min(97, Math.max(3, pct))}%`);
-  };
-
-  let dragging = false;
-  slider.addEventListener("pointerdown", (e) => {
-    dragging = true;
-    slider.setPointerCapture(e.pointerId);
-    setPos(e.clientX);
-  });
-  slider.addEventListener("pointermove", (e) => dragging && setPos(e.clientX));
-  slider.addEventListener("pointerup", () => (dragging = false));
-  slider.addEventListener("pointercancel", () => (dragging = false));
-});
-
 // ---- Lead form (Web3Forms) ----
-// SETUP: create a free key at https://web3forms.com (owner's email) and paste below.
-const WEB3FORMS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+// Key for info@uppervalleylandclearing.com, created 2026-10-09.
+const WEB3FORMS_KEY = "8ed4241b-45ef-4fdb-8c8c-c02a16ff8217";
 
 document.querySelectorAll("form[data-lead]").forEach((form) => {
   form.addEventListener("submit", async (e) => {
@@ -49,7 +29,7 @@ document.querySelectorAll("form[data-lead]").forEach((form) => {
     };
 
     if (WEB3FORMS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
-      setStatus("Form not connected yet — call us instead: (555) 555-0123", false);
+      setStatus("Form not connected yet — call us instead: (509) 260-9126", false);
       return;
     }
 
@@ -67,10 +47,10 @@ document.querySelectorAll("form[data-lead]").forEach((form) => {
         form.reset();
         setStatus("Thanks — we'll be in touch within one business day.", true);
       } else {
-        setStatus("Something went wrong. Please call us instead.", false);
+        setStatus("Something went wrong — call us instead: (509) 260-9126", false);
       }
     } catch {
-      setStatus("Network error — please call us instead.", false);
+      setStatus("Network error — call us instead: (509) 260-9126", false);
     } finally {
       btn.disabled = false;
     }

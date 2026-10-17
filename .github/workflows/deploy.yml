@@ -22,12 +22,6 @@ jobs:
           bun install --frozen-lockfile
           bun run build
 
-      - name: Refresh public/ assets
-        run: |
-          mkdir -p public/css public/images
-          cp css/main.css public/css/main.css
-          cp images/hero.svg public/images/hero.svg
-
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:

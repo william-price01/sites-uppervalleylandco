@@ -1,8 +1,8 @@
-// Dev server: static files + the same /api/geocode the site uses in
-// production on Cloudflare Pages. Run: bun run serve
+// Dev server: static files from public/ (the deploy directory) + the same
+// /api/geocode the site uses in production on Cloudflare Pages. Run: bun run serve
 import { onRequestGet as geocode } from "./functions/api/geocode.js";
 
-const root = import.meta.dir;
+const root = import.meta.dir + "/public";
 
 Bun.serve({
   port: 4173,
