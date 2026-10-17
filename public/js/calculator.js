@@ -7,10 +7,12 @@
 
 const RATES = {
   // Base price per acre: moderate density, flat terrain, easy access.
-  mulching: { label: "Forestry Mastication / Mulching", base: 1800 },
-  fire: { label: "Fire Mitigation / Defensible Space", base: 1600 },
-  clearing: { label: "Full Land Clearing", base: 2400 },
-  brush: { label: "Brush & Blackberry Clearing", base: 1200 },
+  // $2,000/acre across services per Markus, 2026-10-17. Density/terrain/
+  // access multipliers below move it; split per-service if he differentiates.
+  mulching: { label: "Forestry Mastication / Mulching", base: 2000 },
+  fire: { label: "Fire Mitigation / Defensible Space", base: 2000 },
+  clearing: { label: "Full Land Clearing", base: 2000 },
+  brush: { label: "Brush & Blackberry Clearing", base: 2000 },
 };
 
 const DENSITY_MULT = { light: 0.7, moderate: 1.0, heavy: 1.45 };
@@ -25,7 +27,7 @@ function sizeFactor(acres) {
   return 0.8;
 }
 
-const MIN_JOB = 1500; // minimum job charge ($)
+const MIN_JOB = 2000; // minimum job charge ($) — per Markus, 2026-10-17
 const RANGE = 0.2; // output range: estimate ±20%
 const SQ_M_PER_ACRE = 4046.8564224;
 
@@ -119,8 +121,9 @@ function debounce(fn, ms) {
 async function fetchParcels(bounds) {
   const sw = bounds.getSouthWest();
   const ne = bounds.getNorthEast();
+  const envelope = `${sw.lng},${sw.lat},${ne.lng},${ne.lat}`;
   const params = new URLSearchParams({
-    geometry: `${sw.lng},${sw.lat},${ne.lng},${ne.lat}`,
+    geometry: envelope,
     geometryType: "esriGeometryEnvelope",
     inSR: "4326",
     spatialRel: "esriSpatialRelIntersects",
@@ -132,7 +135,53 @@ async function fetchParcels(bounds) {
   });
   const res = await fetch(`${WA_PARCELS_URL}?${params}`);
   const json = await res.json();
-  return json.features || [];
+  return enrichSitusFromCounty(json.features || [], envelope);
+}
+
+// The statewide layer marks newer subdivisions with SITUS_ADDRESS "UNKNOWN".
+// Kittitas County's own situs table has the real addresses — same parcels,
+// joinable via APN (statewide PARCEL_ID_NR = county APN + 3-digit FIPS prefix).
+const situsMissing = (v) => !v || v.trim().toUpperCase().startsWith("UNKNOWN");
+
+async function enrichSitusFromCounty(features, envelope) {
+  if (!features.some((f) => situsMissing(f.properties?.SITUS_ADDRESS || ""))) return features;
+  try {
+    const params = new URLSearchParams({
+      geometry: envelope,
+      geometryType: "esriGeometryEnvelope",
+      inSR: "4326",
+      spatialRel: "esriSpatialRelIntersects",
+      outFields: "PARCELID,t2_Situs",
+      returnGeometry: "false",
+      resultRecordCount: "400",
+      f: "json",
+    });
+    const res = await fetch(`${KITTITAS_SITUS_URL}?${params}`);
+    const json = await res.json();
+    const byApn = new Map();
+    for (const row of json.features || []) {
+      const a = row.attributes || {};
+      if (a.PARCELID && a.t2_Situs && !situsMissing(a.t2_Situs.split(",")[0])) {
+        byApn.set(a.PARCELID, a.t2_Situs);
+      }
+    }
+    for (const f of features) {
+      const props = f.properties || {};
+      if (!situsMissing(props.SITUS_ADDRESS || "")) continue;
+      const apn = (props.PARCEL_ID_NR || "").replace(/^\d{3}-/, "");
+      const situs = byApn.get(apn);
+      if (situs) {
+        // County format: "71 GOLD LEAF LN, CLE ELUM 98922"
+        const [street, rest = ""] = situs.split(",").map((s) => s.trim());
+        props.SITUS_ADDRESS = street;
+        const city = rest.replace(/\s*\d{5}(-\d{4})?\s*$/, "").trim();
+        if (city) props.SITUS_CITY_NM = city;
+      } else {
+        props.SITUS_ADDRESS = ""; // normalize "UNKNOWN" → fallback text downstream
+      }
+    }
+  } catch {}
+  return features;
 }
 
 // Adds clickable (or display-only) county parcel outlines to a map.

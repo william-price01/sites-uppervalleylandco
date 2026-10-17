@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upper Valley Land Clearing — Website Coming Soon</title>
+  <title>Land Clearing &amp; Fire Mitigation | Upper Valley Land Clearing</title>
   <meta name="description" content="Forestry mulching, land clearing, and wildfire defensible space in the Upper Valley. No burning, no hauling. Free on-site estimates." />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,108 +18,201 @@
     "telephone": "+1-509-260-9126",
     "description": "Land clearing, forestry mastication, and wildfire defensible space in the Upper Valley.",
     "priceRange": "$$",
-    "areaServed": "Upper Valley"
+    "areaServed": ["Cle Elum WA", "Suncadia WA", "Upper Kittitas County WA"]
   }
   </script>
 </head>
 <body class="bg-forest-950 text-stone-200 antialiased">
 
-  <main class="relative min-h-screen flex items-center bg-forest-950">
-    <img src="images/hero.svg" alt="Forestry mulcher clearing overgrown land" class="absolute inset-0 w-full h-full object-cover opacity-40" />
-    <div class="relative mx-auto max-w-xl px-4 py-16">
-      <p class="font-display text-white text-lg font-semibold tracking-wide uppercase">
+  <!-- ===== Header ===== -->
+  <header class="sticky top-0 z-50 bg-forest-950/95 backdrop-blur border-b border-forest-800">
+    <div class="mx-auto max-w-6xl px-4 flex items-center justify-between h-16">
+      <a href="index.html" class="font-display text-white text-lg font-semibold tracking-wide uppercase">
         Upper Valley <span class="text-ember-400">Land Clearing</span>
-      </p>
-      <h1 class="mt-6 font-display text-4xl md:text-5xl font-bold text-white uppercase leading-tight">
-        Our Website Is Coming Soon
-      </h1>
-      <p class="mt-4 text-lg text-stone-200">
-        Forestry mulching, land clearing, and wildfire defensible space in the Upper Valley. No burning, no hauling.
-      </p>
-      <p class="mt-6 text-stone-200">
-        Reach us at
-        <a href="tel:+15092609126" class="text-ember-400 font-semibold hover:text-ember-300">(509) 260-9126</a>
-        or
-        <a href="mailto:info@uppervalleylandclearing.com" class="text-ember-400 font-semibold hover:text-ember-300">info@uppervalleylandclearing.com</a>
-      </p>
-
-      <form action="https://api.web3forms.com/submit" method="POST" class="mt-8 bg-forest-900 rounded-lg border border-forest-800 p-6 md:p-8">
-        <h2 class="font-display text-2xl font-semibold uppercase text-white">Send Us a Message</h2>
-        <input type="hidden" name="access_key" value="8ed4241b-45ef-4fdb-8c8c-c02a16ff8217" />
-        <input type="hidden" name="subject" value="New contact — uppervalleylandclearing.com coming-soon page" />
-        <input type="hidden" name="from_name" value="UVLC Website" />
-        <input type="checkbox" name="botcheck" style="display:none" />
-        <div class="mt-5 grid sm:grid-cols-2 gap-4">
-          <div>
-            <label for="name" class="block text-sm font-semibold text-stone-200">Name</label>
-            <input type="text" id="name" name="name" required autocomplete="name"
-              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
-          </div>
-          <div>
-            <label for="phone" class="block text-sm font-semibold text-stone-200">Phone <span class="font-normal text-stone-400">(optional)</span></label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel"
-              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
-          </div>
-          <div class="sm:col-span-2">
-            <label for="email" class="block text-sm font-semibold text-stone-200">Email</label>
-            <input type="email" id="email" name="email" required autocomplete="email"
-              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500" />
-          </div>
-          <div class="sm:col-span-2">
-            <label for="message" class="block text-sm font-semibold text-stone-200">Message</label>
-            <textarea id="message" name="message" rows="4" required
-              class="mt-2 w-full rounded-md border border-forest-700 bg-forest-950 px-3 py-2.5 text-white focus:border-ember-500 focus:ring-ember-500"></textarea>
-          </div>
-        </div>
-        <button type="submit" class="mt-6 w-full sm:w-auto bg-ember-500 hover:bg-ember-600 text-white font-semibold px-8 py-3 rounded-md transition disabled:opacity-60">
-          Send Message
+      </a>
+      <nav id="nav-menu" class="hidden md:flex absolute md:static top-16 left-0 right-0 bg-forest-950 md:bg-transparent flex-col md:flex-row gap-1 md:gap-6 p-4 md:p-0 border-b border-forest-800 md:border-0">
+        <a href="index.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Home</a>
+        <a href="gallery.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Gallery</a>
+        <a href="estimate.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Instant Estimate</a>
+        <a href="contract.html" class="text-stone-200 hover:text-white px-2 py-2 text-sm font-medium">Our Contract</a>
+        <a href="tel:+15092609126" class="md:hidden text-ember-400 font-semibold px-2 py-2 text-sm">(509) 260-9126</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="tel:+15092609126" class="hidden md:inline-block text-white text-sm font-semibold hover:text-ember-300">(509) 260-9126</a>
+        <a href="estimate.html" class="hidden md:inline-block bg-ember-500 hover:bg-ember-600 text-white text-sm font-semibold px-4 py-2 rounded-md transition">Get Estimate</a>
+        <button id="nav-toggle" class="md:hidden text-white p-2" aria-label="Menu" aria-expanded="false">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
-        <p data-status class="mt-3 text-sm"></p>
-      </form>
+      </div>
     </div>
-  </main>
+  </header>
 
-  <script>
-    const form = document.querySelector("form");
-    const status = form.querySelector("[data-status]");
-    const btn = form.querySelector("button[type=submit]");
-    const setStatus = (msg, ok) => {
-      status.textContent = msg;
-      status.className = ok
-        ? "mt-3 text-sm font-medium text-forest-600"
-        : "mt-3 text-sm font-medium text-red-600";
-    };
+  <!-- ===== Hero ===== -->
+  <section class="relative bg-forest-950">
+    <picture>
+      <source srcset="images/cleared-grove.webp" type="image/webp" />
+      <img src="images/cleared-grove.jpg" alt="Cedar grove freshly opened up by forestry mastication" width="1200" height="900" fetchpriority="high" class="absolute inset-0 w-full h-full object-cover opacity-40" />
+    </picture>
+    <div class="relative mx-auto max-w-6xl px-4 py-24 md:py-36">
+      <h1 class="font-display text-4xl md:text-6xl font-bold text-white uppercase leading-tight max-w-3xl">
+        Land Clearing &amp;<br />Fire Mitigation
+      </h1>
+      <p class="mt-4 text-lg md:text-xl text-stone-200 max-w-xl">
+        Reclaim overgrown acreage and protect your home from wildfire — vegetation mulched in place, no burning, no hauling. Free on-site estimate.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="estimate.html" class="bg-ember-500 hover:bg-ember-600 text-white font-semibold px-6 py-3 rounded-md transition">Get My Free Estimate</a>
+        <a href="gallery.html" class="border border-white/60 hover:border-white text-white font-semibold px-6 py-3 rounded-md transition">See Our Work</a>
+      </div>
+      <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone-200">
+        <li class="flex items-center gap-2"><span class="text-ember-400 font-bold">✓</span> Licensed &amp; Insured</li>
+        <li class="flex items-center gap-2"><span class="text-ember-400 font-bold">✓</span> No Burning, No Hauling</li>
+        <li class="flex items-center gap-2"><span class="text-ember-400 font-bold">✓</span> Free Estimates</li>
+        <li class="flex items-center gap-2"><span class="text-ember-400 font-bold">✓</span> Locally Owned &amp; Operated</li>
+      </ul>
+    </div>
+  </section>
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  <!-- ===== Services ===== -->
+  <section class="py-16 md:py-24 bg-forest-900">
+    <div class="mx-auto max-w-6xl px-4">
+      <p class="text-ember-400 font-semibold uppercase tracking-widest text-sm">What We Do</p>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white mt-2">One Machine, One Pass, No Burn Pile</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <a href="estimate.html" class="group bg-forest-950 rounded-lg border border-forest-800 hover:border-forest-600 transition overflow-hidden">
+          <picture>
+            <source srcset="images/mulcher-head.webp" type="image/webp" />
+            <img src="images/mulcher-head.jpg" alt="Takeuchi TL12V2 with FAE forestry mulching head" width="1160" height="870" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </picture>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-semibold uppercase text-white group-hover:text-ember-400 transition">Forestry Mastication</h3>
+            <p class="mt-1 text-sm text-stone-300">Brush and small trees processed in place — nothing hauled away.</p>
+          </div>
+        </a>
+        <a href="estimate.html" class="group bg-forest-950 rounded-lg border border-forest-800 hover:border-forest-600 transition overflow-hidden">
+          <picture>
+            <source srcset="images/defensible-space.webp" type="image/webp" />
+            <img src="images/defensible-space.jpg" alt="Defensible space cleared around a home" width="1200" height="900" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </picture>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-semibold uppercase text-white group-hover:text-ember-400 transition">Fire Mitigation</h3>
+            <p class="mt-1 text-sm text-stone-300">Defensible space around your home — clear the fuel before fire season.</p>
+          </div>
+        </a>
+        <a href="estimate.html" class="group bg-forest-950 rounded-lg border border-forest-800 hover:border-forest-600 transition overflow-hidden">
+          <picture>
+            <source srcset="images/cleared-grove.webp" type="image/webp" />
+            <img src="images/cleared-grove.jpg" alt="Cedar grove opened up after full clearing" width="1200" height="900" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </picture>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-semibold uppercase text-white group-hover:text-ember-400 transition">Land Clearing</h3>
+            <p class="mt-1 text-sm text-stone-300">Full lot clearing for construction, pasture, or plain usability.</p>
+          </div>
+        </a>
+        <a href="estimate.html" class="group bg-forest-950 rounded-lg border border-forest-800 hover:border-forest-600 transition overflow-hidden">
+          <picture>
+            <source srcset="images/half-cleared.webp" type="image/webp" />
+            <img src="images/half-cleared.jpg" alt="Overgrown ground mulched in place beside standing timber" width="1200" height="900" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </picture>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-semibold uppercase text-white group-hover:text-ember-400 transition">Brush Clearing</h3>
+            <p class="mt-1 text-sm text-stone-300">Overgrown fields and back lots knocked back in one visit.</p>
+          </div>
+        </a>
+        <a href="estimate.html" class="group bg-forest-950 rounded-lg border border-forest-800 hover:border-forest-600 transition overflow-hidden">
+          <picture>
+            <source srcset="images/cedar-path.webp" type="image/webp" />
+            <img src="images/cedar-path.jpg" alt="Tracked loader cutting a clean line through cedars" width="1131" height="848" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </picture>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-semibold uppercase text-white group-hover:text-ember-400 transition">Fence Line Clearing</h3>
+            <p class="mt-1 text-sm text-stone-300">Precise boundary clearing without touching your posts.</p>
+          </div>
+        </a>
+        <a href="estimate.html" class="group bg-forest-950 rounded-lg border border-forest-800 hover:border-forest-600 transition overflow-hidden">
+          <picture>
+            <source srcset="images/machine-dog.webp" type="image/webp" />
+            <img src="images/machine-dog.jpg" alt="Tracked loader working in foothill terrain" width="1200" height="900" loading="lazy" decoding="async" class="w-full aspect-[4/3] object-cover" />
+          </picture>
+          <div class="p-5">
+            <h3 class="font-display text-lg font-semibold uppercase text-white group-hover:text-ember-400 transition">Hillside Mastication</h3>
+            <p class="mt-1 text-sm text-stone-300">Tracked equipment built for slopes and difficult terrain.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-      if (form.elements.access_key.value === "YOUR_WEB3FORMS_ACCESS_KEY") {
-        setStatus("Form not connected yet — call us instead: (509) 260-9126", false);
-        return;
-      }
+  <!-- ===== Before/After ===== -->
+  <section class="py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4">
+      <p class="text-ember-400 font-semibold uppercase tracking-widest text-sm">Real Projects</p>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white mt-2">Where the Mulcher Stops</h2>
+      <p class="mt-3 text-stone-300 max-w-2xl">One pass — standing timber on one side, clean mulched ground on the other. Every photo is our own machine on a real job.</p>
+      <div class="mt-8">
+        <picture>
+          <source srcset="images/half-cleared.webp" type="image/webp" />
+          <img src="images/half-cleared.jpg" alt="Standing timber beside ground freshly mulched in one pass" width="1200" height="900" loading="lazy" decoding="async" class="w-full aspect-[3/2] object-cover rounded-lg shadow-lg" />
+        </picture>
+      </div>
+      <div class="mt-6 text-center">
+        <a href="gallery.html" class="text-ember-400 font-semibold hover:underline">See the full gallery →</a>
+      </div>
+    </div>
+  </section>
 
-      btn.disabled = true;
-      const label = btn.textContent;
-      btn.textContent = "Sending…";
-      try {
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          body: new FormData(form),
-        });
-        const json = await res.json();
-        if (json.success) {
-          form.reset();
-          setStatus("Thanks — we'll be in touch within one business day.", true);
-        } else {
-          setStatus("Something went wrong. Please call us instead: (509) 260-9126", false);
-        }
-      } catch {
-        setStatus("Something went wrong. Please call us instead: (509) 260-9126", false);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = label;
-      }
-    });
-  </script>
+  <!-- ===== Why us / operator ===== -->
+  <section class="py-16 md:py-24 bg-forest-900 text-white">
+    <div class="mx-auto max-w-6xl px-4 grid md:grid-cols-2 gap-10 items-center">
+      <picture class="block w-full max-w-sm mx-auto">
+        <source srcset="images/machine-dog.webp" type="image/webp" />
+        <img src="images/machine-dog.jpg" alt="Our tracked Takeuchi loader on a job site — shop dog included" width="1200" height="900" loading="lazy" decoding="async" class="rounded-lg shadow-lg w-full" />
+      </picture>
+      <div>
+        <p class="text-ember-400 font-semibold uppercase tracking-widest text-sm">Who You'll Meet</p>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold uppercase mt-2">The Same Person From Estimate to Finished Job</h2>
+        <p class="mt-4 text-stone-300">No call center, no subcontracted stranger. We walk the scope with you first, protect the trees and fences that should stay, and leave you with clean, usable ground.</p>
+        <ul class="mt-6 space-y-2 text-stone-200">
+          <li class="flex gap-2"><span class="text-ember-400 font-bold">✓</span> Licensed &amp; insured</li>
+          <li class="flex gap-2"><span class="text-ember-400 font-bold">✓</span> Fixed-price written quotes</li>
+          <li class="flex gap-2"><span class="text-ember-400 font-bold">✓</span> Real project photos</li>
+          <li class="flex gap-2"><span class="text-ember-400 font-bold">✓</span> Eco-friendly process — mulch stays on site</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="py-16 bg-ember-500">
+    <div class="mx-auto max-w-6xl px-4 text-center">
+      <h2 class="font-display text-3xl md:text-4xl font-semibold uppercase text-white">Get a Ballpark Price in 30 Seconds</h2>
+      <p class="mt-3 text-white/90">Use the instant estimator, then send it to us — we'll confirm with a free on-site visit.</p>
+      <a href="estimate.html" class="mt-6 inline-block bg-white text-ember-600 font-semibold px-8 py-3 rounded-md hover:bg-stone-100 transition">Start My Estimate</a>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="bg-forest-950 text-stone-300 py-10">
+    <div class="mx-auto max-w-6xl px-4 grid gap-8 md:grid-cols-3">
+      <div>
+        <p class="font-display text-white font-semibold uppercase">Upper Valley Land Clearing</p>
+        <p class="mt-2 text-sm">Land clearing, forestry mastication, and wildfire defensible space in the Upper Valley.</p>
+      </div>
+      <div class="text-sm">
+        <p class="text-white font-semibold mb-2">Contact</p>
+        <p><a href="tel:+15092609126" class="hover:text-white">(509) 260-9126</a></p>
+        <p><a href="mailto:info@uppervalleylandclearing.com" class="hover:text-white">info@uppervalleylandclearing.com</a></p>
+      </div>
+      <div class="text-sm">
+        <p class="text-white font-semibold mb-2">Site</p>
+        <p><a href="gallery.html" class="hover:text-white">Gallery</a></p>
+        <p><a href="estimate.html" class="hover:text-white">Instant Estimate</a></p>
+        <p><a href="contract.html" class="hover:text-white">Our Contract</a></p>
+      </div>
+    </div>
+    <p class="mt-8 text-center text-xs text-stone-500">© <span data-year>2026</span> 57Center LLC dba Upper Valley Land Clearing. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js" defer></script>
 </body>
 </html>

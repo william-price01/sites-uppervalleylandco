@@ -2,8 +2,8 @@
   "name": "uppervalleylandclearing",
   "private": true,
   "scripts": {
-    "build": "bunx @tailwindcss/cli -i src/input.css -o css/main.css --minify",
-    "watch": "bunx @tailwindcss/cli -i src/input.css -o css/main.css --watch",
+    "build": "bunx @tailwindcss/cli -i src/input.css -o public/css/main.css --minify",
+    "watch": "bunx @tailwindcss/cli -i src/input.css -o public/css/main.css --watch",
     "serve": "bun server.js"
   },
   "devDependencies": {
